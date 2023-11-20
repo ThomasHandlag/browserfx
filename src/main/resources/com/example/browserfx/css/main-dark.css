@@ -1,0 +1,67 @@
+.browser-title-bar {
+    -fxbackground-color: rgb(38, 38, 38);
+}
+
+.container {
+    -fx-background-color: #1f1f28;
+}
+
+.btn-border {
+    -fx-background-color: transparent;
+    -fx-background-radius: 24; /* Adjust the radius to make it more or less rounded */
+    -fx-border-radius: 24;
+    /*-fx-border-color: #3498db; !* Border color *!*/
+    -fx-border-width: 2; /* Border width */
+    -fx-text-fill: #3498db; /* Text color */
+    -fx-font-size: 12px; /* Adjust font size as needed */
+}
+
+.btn-border:hover {
+    -fx-background-color: #89939a; /* Background color on hover */
+}
+
+.text-field {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-background-color: transparent;
+    -fx-border-color: #7894a8;
+    -fx-padding: 6;
+    -fx-text-fill: white;
+}
+
+.btn-normal {
+    -fx-padding: 2;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.btn {
+    -fx-padding: 2;
+    -fx-border-width: 0;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: #5e6788;
+    -fx-text-fill: white;
+}
+.tab-pane {
+    -fx-background-color: #191725 !important; /* Set the background color of the TabPane */
+}
+
+.tab {
+    -fx-background-color: #1b202a;
+    -fx-text-fill: white; /* Set the text color */
+    -fx-font-weight: bold; /* Set the font weight */
+    -fx-background-radius: 10 10 0 0; /* Set the background radius to remove rounded corners */
+    -fx-border-radius: 10 10 10 10;
+    -fx-border-width: 0;
+}
+
+.tab:selected {
+    -fx-background-color: #24253d; /* Set the background color for the selected tab */
+    -fx-text-fill: white;
+}
+
+.text-container {
+    -fx-padding: 5;
+}

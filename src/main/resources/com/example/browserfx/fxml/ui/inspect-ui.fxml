@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.browserfx.controllers.InspectController"
+            prefHeight="Infinity" prefWidth="Infinity">
+    <top>
+        <GridPane
+                prefWidth="800" prefHeight="200">
+
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <hgap>10</hgap>
+            <vgap>10</vgap>
+
+            <columnConstraints>
+                <ColumnConstraints percentWidth="70"/>
+                <ColumnConstraints percentWidth="10"/>
+            </columnConstraints>
+
+            <Button GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="btn" onMouseClicked="#backToMain">
+                <graphic>
+                    <FontIcon iconLiteral="fas-backspace" />
+                </graphic>
+            </Button>
+            <Label text="B" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <Label text="C" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Label text="D" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        </GridPane>
+    </top>
+    <center>
+        <TextArea fx:id="editor" prefWidth="800" prefHeight="400" styleClass="text-container"/>
+    </center>
+</BorderPane>
