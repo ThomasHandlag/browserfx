@@ -1,5 +1,6 @@
 package com.example.browserfx.ui;
 
+import com.example.browserfx.BrowserFx;
 import com.example.browserfx.Communication;
 import javafx.concurrent.Worker;
 import javafx.scene.control.Tab;
@@ -7,14 +8,20 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Objects;
 
 public class WebTab extends Tab {
     public WebView webView;
     public WebEngine webEngine;
     public WebHistory history;
-    public static Boolean theme=false;
+    public static Boolean theme = false;
     private static final String baseUrl = "https://www.google.com";
     private final Communication inf;
 
@@ -35,6 +42,12 @@ public class WebTab extends Tab {
     private void initialize() {
         webView = new WebView();
         webEngine = webView.getEngine();
+
+        String filePath = Objects
+                .requireNonNull(
+                        BrowserFx.class
+                                .getResource("web/index.html"))
+                .toExternalForm();
         // Add listener to worker for catching event
         webEngine.getLoadWorker().stateProperty().addListener((observable, old, newVal) -> {
             if (newVal == Worker.State.SUCCEEDED) {
@@ -44,13 +57,14 @@ public class WebTab extends Tab {
                 if (webEngine.getTitle() != null)
                     if (!webEngine.getTitle().contains("Google"))
                         inf.updateTabTitle(webEngine.getTitle());
+                    else inf.updateTabTitle("New tab");
             } else {
                 if (inf != null)
                     inf.loadingHandler(newVal);
             }
         });
         history = webEngine.getHistory();
-        webEngine.load(baseUrl);
+        webEngine.load(filePath);
         setContent(webView);
         setOnCloseRequest((event) -> inf.closeTabListener(this));
     }

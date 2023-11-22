@@ -2,6 +2,7 @@ package com.example.browserfx.controllers;
 
 import com.example.browserfx.Communication;
 import com.example.browserfx.Teller;
+import com.example.browserfx.constants.Scripts;
 import com.example.browserfx.ui.WebTab;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
@@ -10,8 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -36,6 +35,7 @@ public class BrowserController implements Initializable {
     private final String newTabTitle = "New tab";
     private Teller teller;
 
+    private Worker.State currentWebTabState;
 
     Communication inf = new Communication() {
         @Override
@@ -62,6 +62,7 @@ public class BrowserController implements Initializable {
 
         @Override
         public void loadingHandler(Worker.State state) {
+            currentWebTabState = state;
             FontIcon icon = new FontIcon(
                     Objects.requireNonNull(state) == Worker.State.RUNNING ? "far-circle" : "fas-redo"
             );
@@ -127,9 +128,27 @@ public class BrowserController implements Initializable {
 
     }
 
+    /**
+     * Inspect current website and navigate to the inspect view with html and css data
+     */
     public void inspectWeb() {
-        String htmlContent = (String) activeTab.webEngine.executeScript("document.documentElement.outerHTML");
-        teller.switchToInspect(htmlContent);
+        if (currentWebTabState == Worker.State.SUCCEEDED){
+            String htmlContent = (String) activeTab.webEngine.executeScript(Scripts.VIEW_HTML);
+            String styles = "";
+            //  Some website do not allow to read their css style
+            // make this alert to avoid JS exception occur @styles
+           try {
+               styles = (String) activeTab.webEngine.executeScript(Scripts.VIEW_CSS);
+               System.out.println(styles);
+           } catch (Exception e) {
+               Alert dialog = new Alert(Alert.AlertType.WARNING);
+               dialog.setTitle("Error");
+               dialog.setContentText("This website is restrict for viewing CSS!");
+               dialog.show();
+           } finally {
+               teller.switchToInspect(htmlContent, styles);
+           }
+        }
     }
 
     @FXML
@@ -190,5 +209,9 @@ public class BrowserController implements Initializable {
             themeBtn.setGraphic(icon);
             WebTab.theme = false;
         }
+    }
+
+    public void textFieldClick() {
+        seachTextfield.selectAll();
     }
 }

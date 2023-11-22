@@ -1,13 +1,78 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrowserFx</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
+
+        #search-container {
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #fff;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        #google-brand {
+            margin-bottom: 20px;
+            font-size: 50px;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-<h1>hello</h1>
+<div id="search-container">
+    <div id="google-brand">Google</div>
+    <form action="https://www.google.com/search" method="GET">
+        <input type="text" name="q" placeholder="Search on Google" />
+        <input type="submit" value="Search" />
+    </form>
+</div>
 </body>
+
 </html>

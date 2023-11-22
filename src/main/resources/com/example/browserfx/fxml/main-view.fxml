@@ -49,7 +49,7 @@
                         <FontIcon iconLiteral="fas-trash-alt"/>
                     </graphic>
                 </Button>
-                <TextField fx:id="seachTextfield" onKeyPressed="#handleSearch"
+                <TextField fx:id="seachTextfield" onKeyPressed="#handleSearch" onMouseClicked="#textFieldClick"
                            layoutX="61.0" layoutY="5.0"
                            prefHeight="26.0" prefWidth="338.0"
                            styleClass="text-field"/>
