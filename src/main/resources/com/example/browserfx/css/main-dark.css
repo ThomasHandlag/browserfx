@@ -57,6 +57,10 @@
     -fx-border-width: 0;
 }
 
+.tab-header {
+    -fx-background-color: #3498db;
+}
+
 .tab:selected {
     -fx-background-color: #24253d; /* Set the background color for the selected tab */
     -fx-text-fill: white;

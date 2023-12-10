@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseDragEvent;
+import javafx.scene.web.WebEngine;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,6 +22,7 @@ public class InspectController implements Initializable {
     public SplitPane splitPane;
     public TextArea cssViewer;
     public TextField searchField;
+    public WebEngine webEngine;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -29,6 +31,7 @@ public class InspectController implements Initializable {
         htmlViewer.textProperty().addListener((observable, oldValue, newValue) -> {
         });
         htmlViewer.setText(formatHTML(htmlViewer.getText()));
+        cssViewer.setWrapText(true);
     }
 
     private String formatHTML(String htmlCode) {

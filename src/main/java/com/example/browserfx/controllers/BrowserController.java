@@ -37,7 +37,7 @@ public class BrowserController implements Initializable {
 
     private Worker.State currentWebTabState;
 
-    Communication inf = new Communication() {
+    Communication communication = new Communication() {
         @Override
         public void updateSearchField(String str) {
             seachTextfield.setText(str);
@@ -50,7 +50,7 @@ public class BrowserController implements Initializable {
 
         @Override
         public void closeTabListener(WebTab obj) {
-            MenuItem item = new MenuItem(obj.currentUrl);
+            MenuItem item = new MenuItem(obj.getText());
             item.setId(tabHistory.size() + "");
             tabHistory.put(tabHistory.size() + "", obj);
             item.setOnAction(event -> {
@@ -73,7 +73,7 @@ public class BrowserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        WebTab webTab = new WebTab(newTabTitle, inf);
+        WebTab webTab = new WebTab(newTabTitle, communication);
         webTab.setId("" + tabCount);
         tabPane.getTabs().add(webTab);
         activeTab = webTab;
@@ -139,14 +139,12 @@ public class BrowserController implements Initializable {
             // make this alert to avoid JS exception occur @styles
            try {
                styles = (String) activeTab.webEngine.executeScript(Scripts.VIEW_CSS);
-               System.out.println(styles);
+               teller.switchToInspect(htmlContent, styles);
            } catch (Exception e) {
                Alert dialog = new Alert(Alert.AlertType.WARNING);
                dialog.setTitle("Error");
                dialog.setContentText("This website is restrict for viewing CSS!");
                dialog.show();
-           } finally {
-               teller.switchToInspect(htmlContent, styles);
            }
         }
     }
@@ -160,7 +158,7 @@ public class BrowserController implements Initializable {
 
     @FXML
     public void handleAddTab() {
-        WebTab webTab = new WebTab(newTabTitle, inf);
+        WebTab webTab = new WebTab(newTabTitle, communication);
         webTab.setId("" + (tabCount + 1));
         tabPane.getTabs().add(webTab);
     }

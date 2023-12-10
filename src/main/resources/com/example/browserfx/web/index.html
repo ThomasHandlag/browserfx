@@ -7,10 +7,10 @@
     <title>BrowserFx</title>
     <style>
         body {
-            margin: 0;
             padding: 0;
+            margin: -100px 0 0;
             overflow: hidden;
-            background: linear-gradient(45deg, #3498db, #2ecc71);
+            background: linear-gradient(45deg, #134196, #23154d, #38caff);
             background-size: 400% 400%;
             animation: gradientAnimation 15s ease infinite;
             display: flex;
@@ -29,9 +29,9 @@
             padding: 10px;
             font-size: 16px;
             border: none;
-            border-radius: 5px;
+            border-radius: 20px;
             width: 300px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 10px rgba(205, 205, 205, 0.5);
         }
 
         input[type="submit"] {
@@ -39,11 +39,14 @@
             font-size: 16px;
             background: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 20px;
             margin-left: 10px;
             cursor: pointer;
         }
 
+        input:focus {
+            outline: none;
+        }
         @keyframes gradientAnimation {
             0% {
                 background-position: 0% 50%;
@@ -59,9 +62,10 @@
         }
         #google-brand {
             margin-bottom: 20px;
-            font-size: 50px;
+            font-size: 90px;
             font-weight: bold;
         }
+
     </style>
 </head>
 
