@@ -10,19 +10,22 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class BrowserFx extends Application {
 
-    private Boolean theme = false;
+    private static Boolean theme = false;
 
     private Constant mode = Constant.NORMAL_MODE;
     private BrowserController controller;
     private Scene scene;
     private InspectController inspectController;
     private Stage stage;
-
+    private double width = 1000, height = 600, positionX = 10, positionY = 10;
     /**
      *
      */
@@ -50,21 +53,23 @@ public class BrowserFx extends Application {
         }
     };
     private final ScenePasser scenePasser = this::reloadMainScene;
+
     /**
      * Load dev scene and pass it to stage
      * {@code @REQUIRE html: HTML string, css: CSS string}
      */
     public void devScene(String html, String css) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/ui/inspect-ui.fxml"));
-        Scene scene1 = new Scene(fxmlLoader.load(), 800, 600);
+        Scene scene1 = new Scene(fxmlLoader.load(), width, height);
         scene1.getStylesheets().add(Objects.requireNonNull(
-                        getClass().getResource("css/main.css"))
+                        getClass().getResource(theme ? "css/main-dark.css" : "css/main.css"))
                 .toExternalForm());
         scene1.setOnKeyPressed(this::keyHandler);
         stage.setScene(scene1);
         inspectController = fxmlLoader.getController();
         inspectController.scenePasser = scenePasser;
         inspectController.htmlViewer.setText(html);
+        inspectController.theme = theme;
         inspectController.cssViewer.setText(CssParser.colorizeCSS(css));
     }
 
@@ -72,22 +77,62 @@ public class BrowserFx extends Application {
     public void start(Stage stage) throws IOException {
         //load main scene
         this.stage = stage;
+        stage.widthProperty().addListener((observable, oldValue, newValue) -> {
+            width = newValue.doubleValue();
+        });
+
+        // Add listener for window horizontal position changes
+        stage.xProperty().addListener((observable, oldValue, newValue) -> {
+            positionX = newValue.doubleValue();
+        });
+
+        // Add listener for window vertical position changes
+        stage.yProperty().addListener((observable, oldValue, newValue) -> {
+            positionY = newValue.doubleValue();
+        });
+        stage.heightProperty().addListener((observable, oldValue, newValue) -> {
+            height = newValue.doubleValue();
+        });
+        getTheme();
         loadMainScene();
         stage.setTitle("BrowserFx");
         stage.show();
     }
 
+    private void getTheme() {
+        try {
+            String settingPath = "config/theme.brs";
+            URI uri = new URI(Objects.requireNonNull(
+                    BrowserFx.class.getResource(settingPath)).toString()
+            );
+            File file = new File(uri);
+            BufferedReader readLine = new BufferedReader(new FileReader(file));
+            Stream<String> lines = readLine.lines();
+            lines.forEach((line) -> {
+                if (line.contains("theme")) {
+                    String themeValue = line.substring(line.indexOf(' ')+1);
+                    theme = themeValue.equals("dark");
+                }
+            });
+            readLine.close();
+        } catch (URISyntaxException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Load main scene with Google search bar
+     *
      * @throws IOException avoid fxml file is missing
      */
     public void loadMainScene() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(BrowserFx.class.getResource("fxml/main-view.fxml"));
-        scene = new Scene(fxmlLoader.load(), 800, 600);
+        scene = new Scene(fxmlLoader.load(), width, height);
         stage.setScene(scene);
         setStyle();
         controller = fxmlLoader.getController();
         controller.setTeller(this.teller);
+        controller.stage = stage;
         controller.loadStyle();
         scene.setOnKeyPressed(this::keyHandler);
     }
@@ -109,7 +154,7 @@ public class BrowserFx extends Application {
                 controller.activeTab.reload();
         } else if (event.getCode() == KeyCode.F && event.isControlDown()) {
             if (stage.getScene() == scene) {
-                controller.seachTextfield.requestFocus();
+                controller.searchTextField.requestFocus();
             } else {
                 inspectController.searchField.requestFocus();
             }
@@ -135,7 +180,7 @@ public class BrowserFx extends Application {
     }
 
     public void setTheme(Boolean theme) {
-        this.theme = theme;
+        BrowserFx.theme = theme;
     }
 
     public static void main(String[] args) {

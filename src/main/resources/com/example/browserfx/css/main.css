@@ -59,8 +59,15 @@
     -fx-background-color: #9fb0b9; /* Set the background color for the selected tab */
 }
 
-.text-container {
-    -fx-padding: 5;
-    -fx-background-color: #27263a;
-    -fx-text-fill: #3498db;
+.text-area {
+    -fx-background-color: #f0f0f0; /* Background color */
+    -fx-text-fill: #333333; /* Text color */
+    -fx-font-size: 14px; /* Font size */
+    -fx-padding: 10px; /* Padding */
+    -fx-border-color: #999999; /* Border color */
+    -fx-border-width: 1px; /* Border width */
+}
+
+.text-area:focused {
+    -fx-border-color: #0078d4; /* Border color when focused */
 }

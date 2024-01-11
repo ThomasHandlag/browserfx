@@ -5,48 +5,43 @@
 <?import javafx.scene.layout.*?>
 
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.browserfx.controllers.InspectController">
-   <top>
-       <GridPane>
-           <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="103.2000202178955"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="756.7999877929688" minWidth="10.0"
-                                  prefWidth="105.80003662109374"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="756.7999877929688" minWidth="10.0"
-                                  prefWidth="353.7999633789062"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="756.7999877929688" minWidth="10.0"
-                                  prefWidth="200.80002441406242"/>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="756.7999877929688" minWidth="10.0"
-                                  prefWidth="174.39999999999998"/>
-           </columnConstraints>
-           <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-           </rowConstraints>
-           <padding>
-               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
-           </padding>
-           <Button fx:id="backBtn" mnemonicParsing="false" onMouseClicked="#backToMain"
-                   minWidth="30.0" prefHeight="30.0" prefWidth="30.0"
-                   styleClass="btn-border" text="Back">
-               <graphic>
-                   <FontIcon iconLiteral="fas-arrow-left" />
-               </graphic>
-           </Button>
-           <TextField fx:id="searchField" prefHeight="26.0" prefWidth="417.0" GridPane.columnIndex="4" styleClass="text-field"/>
-           <AnchorPane prefHeight="36.0" prefWidth="142.0" GridPane.columnIndex="3">
-               <Button fx:id="upBtn" layoutY="4.0" mnemonicParsing="false" text="Button"/>
-               <Button fx:id="downBtn" layoutX="60.0" layoutY="5.0" mnemonicParsing="false" text="Button"/>
-               <Label fx:id="counter" layoutX="124.0" layoutY="2.0" prefHeight="33.0" prefWidth="61.0" text="Label"/>
-           </AnchorPane>
-           <Label fx:id="url" text="Label" GridPane.columnIndex="2"/>
-           <Button mnemonicParsing="false" text="Save" GridPane.columnIndex="1"/>
-       </GridPane>
-   </top>
-   <center>
-       <SplitPane fx:id="splitPane" dividerPositions="0.7" prefHeight="568.0" prefWidth="466.0"
-                  BorderPane.alignment="CENTER" onMouseDragged="#onDragSplitPane">
-           <TextArea fx:id="htmlViewer" prefHeight="400" prefWidth="800" styleClass="text-container"/>
-           <TextArea fx:id="cssViewer" prefHeight="566.0" prefWidth="248.0"/>
-       </SplitPane>
-   </center>
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.browserfx.controllers.InspectController"
+            styleClass="container"
+>
+    <top>
+        <GridPane styleClass="container">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="103.2000202178955"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="756.7999877929688" minWidth="10.0"
+                                   prefWidth="105.80003662109374"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="756.7999877929688" minWidth="10.0"
+                                   prefWidth="353.7999633789062"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="756.7999877929688" minWidth="10.0"
+                                   prefWidth="200.80002441406242"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="756.7999877929688" minWidth="10.0"
+                                   prefWidth="174.39999999999998"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+            </padding>
+            <Button fx:id="backBtn" mnemonicParsing="false" onMouseClicked="#backToMain"
+                    minWidth="30.0" prefHeight="30.0" prefWidth="30.0"
+                    styleClass="btn-border" text="Back">
+                <graphic>
+                    <FontIcon iconLiteral="fas-arrow-left"/>
+                </graphic>
+            </Button>
+        </GridPane>
+    </top>
+    <center>
+        <SplitPane fx:id="splitPane" dividerPositions="0.7" prefHeight="568.0" prefWidth="466.0" styleClass="container"
+                   BorderPane.alignment="CENTER" onMouseDragged="#onDragSplitPane">
+            <TextArea fx:id="htmlViewer" prefHeight="400" prefWidth="800" styleClass="text-area"/>
+            <TextArea fx:id="cssViewer" prefHeight="566.0" prefWidth="248.0" styleClass="text-area"/>
+        </SplitPane>
+    </center>
 </BorderPane>

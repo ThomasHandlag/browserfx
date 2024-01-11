@@ -4,7 +4,9 @@ import com.example.browserfx.BrowserFx;
 import com.example.browserfx.Communication;
 import javafx.concurrent.Worker;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
@@ -32,6 +34,8 @@ public class WebTab extends Tab {
         this.communication = inf;
     }
 
+    private String defaultTab = "";
+
     /**
      * current url of the tab, this is used to reload
      */
@@ -41,9 +45,20 @@ public class WebTab extends Tab {
      * Init all needed field
      */
     private void initialize() {
+        MenuItem bookmarkItem = new MenuItem("Bookmark this page");
+        bookmarkItem.setOnAction(e -> {
+                    TextInputDialog dialog = new TextInputDialog(getText());
+                    dialog.setTitle("Add bookmark -> " + currentUrl);
+                    dialog.setHeaderText("Enter your text:");
+                    dialog.showAndWait().ifPresent(input -> communication.addBookmark(input, currentUrl));
+                }
+        );
+        ContextMenu contextMenu = new ContextMenu();
+        contextMenu.getItems().add(bookmarkItem);
+        setContextMenu(contextMenu);
         webView = new WebView();
         webEngine = webView.getEngine();
-        String filePath = Objects
+        defaultTab = Objects
                 .requireNonNull(
                         BrowserFx.class
                                 .getResource("web/index.html"))
@@ -56,16 +71,17 @@ public class WebTab extends Tab {
                 communication.updateSearchField(currentUrl);
                 communication.loadingHandler(newVal);
                 if (webEngine.getTitle() != null)
-                    if (!webEngine.getTitle().contains("Google"))
-                        communication.updateTabTitle(webEngine.getTitle());
-                    else communication.updateTabTitle("New tab");
+                    if (webEngine.getTitle().contains("Google"))
+                        setText("New tab");
+                    else setText(webEngine.getTitle());
+                else setText("New tab");
             } else {
                 if (communication != null)
                     communication.loadingHandler(newVal);
             }
         });
         history = webEngine.getHistory();
-        webEngine.load(filePath);
+        webEngine.load(defaultTab);
         setContent(webView);
         setOnCloseRequest((event) -> communication.closeTabListener(this));
     }
@@ -95,8 +111,10 @@ public class WebTab extends Tab {
     public void loadURl(String url) {
         if (isValidHttpUri(url)) {
             webEngine.load(url);
+        } else if (Objects.equals(url, "")) {
+            webEngine.load(defaultTab);
         } else {
-            webEngine.load(WWW_GOOGLE_COM + "/search?q=" + url + "&oq=" + url + "&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIMCAEQLhgNGLEDGIAEMgkIAhAuGA0YgAQyCQgDEAAYDRiABDIJCAQQABgNGIAEMgkIBRAAGA0YgAQyCQgGEAAYDRiABDIJCAcQABgNGIAEMgoICBAAGAoYDRge0gEJMjU2OWowajE1qAIAsAIA&sourceid=chrome&ie=UTF-8");
+            webEngine.load(WWW_GOOGLE_COM + "/search?q=" + url + "&oq=" + url + "&sourceid=chrome&ie=UTF-8");
         }
     }
 

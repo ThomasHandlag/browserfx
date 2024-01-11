@@ -4,31 +4,25 @@
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21">
-  <content>
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21">
     <AnchorPane minHeight="0.0" minWidth="0.0">
-         <children>
-            <BorderPane prefHeight="400.0" prefWidth="600.0">
-               <center>
-                  <TabPane depthTest="ENABLE" prefHeight="200.0" prefWidth="200.0" rotateGraphic="true" stylesheets="@../../css/main-dark.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-                    <tabs>
-                      <Tab text="Untitled Tab 1">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                        </content>
-                      </Tab>
-                      <Tab text="Untitled Tab 2">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                        </content>
-                      </Tab>
-                    </tabs>
-                     <effect>
-                        <DropShadow />
-                     </effect>
-                  </TabPane>
-               </center>
-            </BorderPane>
-         </children></AnchorPane>
-  </content>
+        <BorderPane prefHeight="400.0" prefWidth="600.0">
+            <center>
+                <TabPane depthTest="ENABLE" prefHeight="200.0" prefWidth="200.0" rotateGraphic="true"
+                         stylesheets="@../../css/main-dark.css" tabClosingPolicy="UNAVAILABLE"
+                         BorderPane.alignment="CENTER">
+                    <effect>
+                        <DropShadow/>
+                    </effect>
+                    <Tab text="Untitled Tab 1">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                    </Tab>
+                    <Tab text="Untitled Tab 2">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                    </Tab>
+                </TabPane>
+            </center>
+        </BorderPane>
+    </AnchorPane>
 </ScrollPane>

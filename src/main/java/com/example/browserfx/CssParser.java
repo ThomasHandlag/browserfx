@@ -36,7 +36,6 @@ public class CssParser {
         // Find and replace hex colors with their actual color
         while (matcher.find()) {
             String hexColor = matcher.group(0);
-            System.out.println(hexColor);
             Map<String, Integer> color = hexToColor(hexColor);
             String rgbColor = "rgb(" + color.get("red") + ", " + color.get("green") + ", " + color.get("blue") + ")";
             matcher.appendReplacement(coloredCSS, rgbColor);

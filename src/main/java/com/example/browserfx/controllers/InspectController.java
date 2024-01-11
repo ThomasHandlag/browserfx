@@ -4,8 +4,10 @@ import com.example.browserfx.ScenePasser;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,7 +24,7 @@ public class InspectController implements Initializable {
     public SplitPane splitPane;
     public TextArea cssViewer;
     public TextField searchField;
-    public WebEngine webEngine;
+    public boolean theme;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -32,12 +34,11 @@ public class InspectController implements Initializable {
         });
         htmlViewer.setText(formatHTML(htmlViewer.getText()));
         cssViewer.setWrapText(true);
+        ((FontIcon)backBtn.getGraphic()).setIconColor(theme ? Color.DARKMAGENTA : Color.WHITE);
     }
 
     private String formatHTML(String htmlCode) {
-
         htmlCode = htmlCode.replaceAll(">", ">\n");
-        htmlCode = htmlCode.replaceAll(";", ";\n");
         String[] lines = htmlCode.split("\n");
         StringBuilder formattedCode = new StringBuilder();
         int indentationLevel = 0;
@@ -57,7 +58,7 @@ public class InspectController implements Initializable {
         return formattedCode.toString();
     }
 
-    public void onDragSplitPane(MouseDragEvent event) {
+    public void onDragSplitPane(MouseEvent event) {
         double totalWidth = splitPane.getWidth();
         double mouseX = event.getX();
 
