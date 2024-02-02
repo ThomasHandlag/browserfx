@@ -35,37 +35,21 @@ public class InspectController implements Initializable {
         htmlViewer.setText(formatHTML(htmlViewer.getText()));
         cssViewer.setWrapText(true);
         ((FontIcon)backBtn.getGraphic()).setIconColor(theme ? Color.DARKMAGENTA : Color.WHITE);
+//        htmlViewer.setOnContextMenuRequested(event -> {
+//            String selected = htmlViewer.getSelectedText();
+//        });
     }
 
     private String formatHTML(String htmlCode) {
-        htmlCode = htmlCode.replaceAll(">", ">\n");
-        String[] lines = htmlCode.split("\n");
-        StringBuilder formattedCode = new StringBuilder();
-        int indentationLevel = 0;
-
-        for (String line : lines) {
-            if (line.startsWith("</")) {
-                indentationLevel--;
-            }
-            formattedCode.append("    ".repeat(Math.max(0, indentationLevel)));
-            formattedCode.append(line).append("\n");
-
-            if (line.endsWith(">") && !line.startsWith("</")) {
-                indentationLevel++;
-            }
-        }
-
-        return formattedCode.toString();
+        String rtString = htmlCode.replaceAll(">", ">\n");
+        rtString = rtString.replaceAll("<", "\t<");
+        return rtString;
     }
 
     public void onDragSplitPane(MouseEvent event) {
         double totalWidth = splitPane.getWidth();
         double mouseX = event.getX();
-
-        // Calculate the new divider position based on mouse position
         double newDividerPosition = mouseX / totalWidth;
-
-        // Set the new divider position
         splitPane.setDividerPositions(newDividerPosition);
     }
 

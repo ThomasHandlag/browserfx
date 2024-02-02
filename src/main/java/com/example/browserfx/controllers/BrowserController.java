@@ -11,12 +11,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
-
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -86,6 +84,11 @@ public class BrowserController implements Initializable {
             if (bookmarkMap != null)
                 bookmarkMap.put(title, link);
             Button newBmBtn = new Button(title);
+            ContextMenu menu = new ContextMenu();
+            MenuItem item = new MenuItem("Remove");
+            item.setOnAction(event -> removeBookmark(title));
+            menu.getItems().add(item);
+            newBmBtn.setContextMenu(menu);
             newBmBtn.setOnAction(e -> activeTab.loadURl(link));
             bookmarkBar.getChildren().add(newBmBtn);
             try {
@@ -148,7 +151,7 @@ public class BrowserController implements Initializable {
             lines.forEach((line) -> {
                 if (line.contains("<:>")) {
                     String title = line.substring(0, line.indexOf("<:>"));
-                    String link = line.substring(line.indexOf("<:>")+3);
+                    String link = line.substring(line.indexOf("<:>") + 3);
                     bookmarkMap.put(title, link);
                 }
             });
@@ -158,7 +161,12 @@ public class BrowserController implements Initializable {
         }
         if (bookmarkMap != null) {
             bookmarkMap.forEach((title, link) -> {
+                ContextMenu menu = new ContextMenu();
+                MenuItem item = new MenuItem("Remove");
+                item.setOnAction(event -> removeBookmark(title));
+                menu.getItems().add(item);
                 Button bookmarkBtn = new Button(title);
+                bookmarkBtn.setContextMenu(menu);
                 bookmarkBtn.getStyleClass().add("bookmark-btn");
                 bookmarkBtn.setTooltip(new Tooltip(title));
                 bookmarkBtn.setOnAction(event -> activeTab.loadURl(link));
@@ -224,7 +232,7 @@ public class BrowserController implements Initializable {
     public void inspectWeb() {
         if (currentWebTabState == Worker.State.SUCCEEDED) {
             String htmlContent = (String) activeTab.webEngine.executeScript(Scripts.VIEW_HTML);
-            String styles = "";
+            String styles;
             //  Some website do not allow to read their css style
             // make this alert to avoid JS exception occur @styles
             try {
@@ -305,5 +313,35 @@ public class BrowserController implements Initializable {
 
     public void textFieldClick() {
         searchTextField.selectAll();
+    }
+
+    private void removeBookmark(String key) {
+        if (bookmarkMap != null) {
+            bookmarkMap.remove(key);
+            bookmarkBar.getChildren().removeIf(node -> {
+                Button btn = (Button) node;
+                return btn.getText().equals(key);
+            });
+            try {
+                URI uri = new URI(
+                        Objects.requireNonNull(
+                                Objects.requireNonNull(
+                                        BrowserFx.class.getResource("config/bookmarklist.brs")).toString()
+                        )
+                );
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(uri)));
+                bookmarkMap.forEach((t, l) -> {
+                    String line = "\n" + t + "<:>" + l;
+                    try {
+                        bufferedWriter.write(line);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                bufferedWriter.close();
+            } catch (IOException | URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
