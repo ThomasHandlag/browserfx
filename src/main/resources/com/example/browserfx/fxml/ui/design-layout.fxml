@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="850.0" style="-fx-background-color: #222222;" styleClass="container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.browserfx.controllers.BrowserController">
+    <top>
+        <GridPane BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="228.0000244140625" minWidth="-Infinity" percentWidth="27.0" prefWidth="222.39998779296874" />
+                <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="ALWAYS" maxWidth="455.19990234374995" minWidth="10.0" percentWidth="54.0" prefWidth="439.0000122070312" />
+                <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="ALWAYS" maxWidth="92.80007324218752" minWidth="10.0" percentWidth="11.0" prefWidth="81.60000000000002" />
+                <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="57.200000000000045" minWidth="10.0" percentWidth="9.0" prefWidth="57.200000000000045" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <HBox spacing="3.0">
+                <padding>
+                    <Insets top="5.0" />
+                </padding>
+                <Button fx:id="backBtn" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onMouseClicked="#handleBack" styleClass="btn-border">
+
+                </Button>
+                <Button fx:id="forwardBtn" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onMouseClicked="#handleForward" styleClass="btn-border">
+
+                </Button>
+                <Button fx:id="reloadBtn" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onMouseClicked="#handleReload" styleClass="btn-border">
+
+                </Button>
+                <Button fx:id="homeBtn" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onMouseClicked="#handleHomepage" styleClass="btn-border">
+
+                </Button>
+            </HBox>
+            <GridPane hgap="2.0" prefHeight="35.0" prefWidth="407.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS">
+                <columnConstraints>
+                    <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="62.79998779296875" minWidth="10.0" percentWidth="14.0" prefWidth="62.79998779296875" />
+                    <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="300.3999755859375" minWidth="10.0" percentWidth="72.0" prefWidth="288.20001220703125" />
+                    <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="219.79998779296875" minWidth="10.0" percentWidth="14.0" prefWidth="58.000024414062466" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                <Button fx:id="clearBtn" mnemonicParsing="false" onMouseClicked="#clearHistory" styleClass="btn-border">
+
+             </Button>
+                <Button fx:id="addTabBtn" mnemonicParsing="false" onMouseClicked="#handleAddTab" styleClass="btn-border" GridPane.columnIndex="2">
+
+             </Button>
+                <TextField fx:id="searchTextField" onKeyPressed="#handleSearch" onMouseClicked="#textFieldClick" prefHeight="26.0" prefWidth="490.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
+            <padding>
+               <Insets top="5.0" />
+            </padding>
+            </GridPane>
+            <MenuButton fx:id="menuBtn" mnemonicParsing="false" styleClass="btn" text="History" GridPane.columnIndex="2">
+            </MenuButton>
+            <ToggleButton fx:id="themeBtn" minWidth="42.0" mnemonicParsing="false" onMouseClicked="#handleTheme" prefHeight="24.0" prefWidth="42.0" styleClass="btn-normal" GridPane.columnIndex="3" />
+        </GridPane>
+    </top>
+    <center>
+        <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222;" styleClass="container" BorderPane.alignment="CENTER">
+            <center>
+                <TabPane fx:id="tabPane" prefHeight="800.0" prefWidth="200.0" style="-fx-background-color: #1a1825" styleClass="container" tabClosingPolicy="ALL_TABS" BorderPane.alignment="CENTER">
+                    <Tab text="Untitled Tab">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #222222;" />
+                    </Tab>
+                    <Tab style="-fx-background-color: #000111;" text="Untitled Tab">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </Tab>
+                </TabPane>
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>
